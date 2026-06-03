@@ -11,6 +11,7 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    "noEmit": true,
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
@@ -19,10 +20,7 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noEmit": false,        
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true
+    "noEmit": false
   },
   "include": ["vite.config.ts"]
 }
