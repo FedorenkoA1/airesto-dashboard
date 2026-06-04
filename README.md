@@ -1,5 +1,8 @@
 # Airesto Dashboard
 
+Netlify:
+https://airesto-dashboard.netlify.app/
+
 Restaurant reservation grid built for the Airesto test task.
 
 ## Live Demo
