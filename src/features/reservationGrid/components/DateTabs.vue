@@ -50,6 +50,7 @@ const tabs = computed(() => {
 </script>
 
 <template>
+  <p class="reservations-title">Бронирования</p>
   <div class="date-tabs">
     <span class="date-tabs__label">Дата</span>
     <div class="date-tabs__list">
@@ -69,6 +70,13 @@ const tabs = computed(() => {
 </template>
 
 <style scoped>
+.reservations-title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  margin-left: 12px;
+  margin-top: 10px;
+}
 .date-tabs {
   display: flex;
   flex-direction: column;
@@ -80,6 +88,7 @@ const tabs = computed(() => {
 .date-tabs__label {
   align-self: flex-start;
   font-size: 11px;
+  font-weight: 400;
   color: var(--color-text-muted);
   flex-shrink: 0;
 }

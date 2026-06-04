@@ -151,7 +151,7 @@ const nowPercent = computed((): number => {
           class="reservation-grid__table-header"
         >
           <div class="table-header__top">
-            <span class="table-header__number">№{{ table.number }}</span>
+            <span class="table-header__number">#{{ table.number }}</span>
             <span class="table-header__capacity">{{ table.capacity }} чел</span>
           </div>
           <div class="table-header__zone">{{ table.zone }}</div>
@@ -256,6 +256,7 @@ const nowPercent = computed((): number => {
 
 .table-header__top {
   display: flex;
+  justify-content: center;
   align-items: baseline;
   gap: 4px;
 }
@@ -268,11 +269,13 @@ const nowPercent = computed((): number => {
 
 .table-header__capacity {
   font-size: 11px;
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
 }
 
 .table-header__zone {
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
   color: var(--color-text-muted);
 }
 
@@ -293,8 +296,8 @@ const nowPercent = computed((): number => {
   flex-shrink: 0;
   background-color: var(--color-bg-header);
   border-right: 2px solid var(--color-border-light);
-  isolation: isolate;
   overflow: visible;
+  isolation: isolate;
 }
 
 .time-axis__label {
@@ -318,10 +321,12 @@ const nowPercent = computed((): number => {
   background-color: var(--color-border);
   pointer-events: none;
   opacity: 0.4;
+  z-index: -1;
 }
 
 .time-axis__label:nth-child(odd)::after {
   opacity: 0.7;
+  z-index: -1;
 }
 
 /* ── Columns Container ─────────────────────────────────────────────── */

@@ -243,6 +243,7 @@ const phoneLast4 = computed(() => props.event.phone ? props.event.phone.slice(-4
   font-weight: 600;
   line-height: 1.35;
   box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
 }
 
 .event-block:hover {

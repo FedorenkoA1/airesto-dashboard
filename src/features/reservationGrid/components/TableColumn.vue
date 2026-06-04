@@ -146,7 +146,7 @@ const eventPositions = computed(() =>
 .table-column__event-wrapper {
   position: absolute;
   padding: 0 1px;
-  z-index: 1;
+  z-index: 2;
   min-width: 20px;
   box-sizing: border-box;
   overflow: visible;

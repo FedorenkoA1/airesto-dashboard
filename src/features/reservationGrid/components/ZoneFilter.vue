@@ -40,6 +40,7 @@ const store = useReservationsStore()
 
 .zone-filter__label {
   font-size: 11px;
+  font-weight: 400;
   color: var(--color-text-muted);
 }
 
@@ -54,6 +55,7 @@ const store = useReservationsStore()
   border-radius: 4px;
   border: 1px solid var(--color-border);
   background: transparent;
+  margin-bottom: 40px;
   color: var(--color-text-secondary);
   font-size: 12px;
   cursor: pointer;
@@ -64,6 +66,14 @@ const store = useReservationsStore()
   border-color: var(--color-border-light);
   color: var(--color-text-primary);
   background-color: var(--color-bg-elevated);
+}
+
+.zone-chip--active,
+.zone-chip--active:hover {
+  background-color: var(--color-zone-active);
+  border-color: var(--color-zone-active);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .zone-chip--active {

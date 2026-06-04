@@ -81,7 +81,7 @@ const { nowFormatted } = useRestaurantTime(computed(() => restaurant.value?.time
 }
 
 .brand-logo {
-  font-weight: 800;
+  font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.05em;
   color: var(--color-text-primary);
@@ -96,19 +96,17 @@ const { nowFormatted } = useRestaurantTime(computed(() => restaurant.value?.time
   color: var(--color-text-light);
 }
 
-.app-header__settings {
-  flex: 1;         
+.app-header__settings {         
   display: flex;
   flex-direction: row;
   align-items: center;
   column-gap: 10px;
-  max-width: 400px;  /* but never too wide */
 }
 
 .header-search :deep(.el-input__wrapper) {
-width: 258px;
+  width: 258px;
   height: 28px;
-    border-width: 1px;
+  border-width: 1px;
   border-radius: 8px;
   padding-block: 8px;
   background-color: var(--color-bg-elevated);
