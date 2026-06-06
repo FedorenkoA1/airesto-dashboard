@@ -95,7 +95,7 @@ export const useReservationsStore = defineStore('reservations', () => {
     const next = new Set(visibleZones.value)
 
     if (next.has(zone)) {
-      if (next.size > 1) next.delete(zone)
+      next.delete(zone)
     } else {
       next.add(zone)
     }
