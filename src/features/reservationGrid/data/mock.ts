@@ -1,7 +1,7 @@
 import type { ApiResponse, Table, Order, Reservation } from "@/features/reservationGrid/types";
 
 const BASE_DAY = '2025-04-04'
-const TZ_OFFSET = '+03:00'
+const TZ_OFFSET = '+10:00'
 
 function t(time: string, day = BASE_DAY): string {
   return `${day}T${time}:00.000${TZ_OFFSET}`
