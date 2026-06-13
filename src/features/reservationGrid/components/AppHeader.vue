@@ -1,13 +1,36 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { useReservationsStore } from "@/features/reservationGrid/store/reservations";
 import { useRestaurantTime } from "@/features/reservationGrid/composables/useRestaurantTime";
-import { Search, Sunny, Moon, Right } from "@element-plus/icons-vue";
+import { useDebounce } from "@/utils/debounce";
+import { Search, Sunny, Moon, Right, ArrowDown } from "@element-plus/icons-vue";
 
 const store = useReservationsStore();
 const restaurant = computed(() => store.restaurant);
 
 const { nowFormatted } = useRestaurantTime(computed(() => restaurant.value?.timezone ?? 'UTC').value);
+
+const localQuery = ref<string>('');
+
+const debouncedSearch = useDebounce((value: string) => {
+  store.searchQuery = value;
+}, 300);
+
+const onSearchInput = (value: string) => {
+  localQuery.value = value;
+  debouncedSearch(value);
+}
+
+// Search mode options
+const searchModes = [
+  { label: 'Все',    value: 'all'    },
+  { label: 'Имя',    value: 'name'   },
+  { label: 'Статус', value: 'status' },
+  { label: 'Стол',   value: 'table'  },
+];
+
+// Map with search mode options
+const currentModeLable = computed(() => searchModes.find(searchMode => searchMode.value === store.searchMode)?.label ?? 'Все');
 </script>
 
 <template>
@@ -18,11 +41,52 @@ const { nowFormatted } = useRestaurantTime(computed(() => restaurant.value?.time
       <span class="brand-name">{{ restaurant?.restaurant_name ?? '...' }}</span>
     </div>
     <div class="app-header__settings">
-      <el-input
+      <div class="header-search">
+        {{ localQuery }}
+        <el-input
+        v-model="localQuery"
         placeholder="⌘+Л поиск по имени"
-        class="header-search"
+        class="header-search__input"
         :prefix-icon="Search"
+        @input="onSearchInput"
       />
+
+      <!--
+        Divider between input and dropdown
+        Visual separation
+      -->
+      <div class="header-search__divider" />
+
+      <!--
+        el-dropdown - shows options on click
+        trigger="click" - opens on click not hover
+      -->
+      
+      <el-dropdown
+        trigger="click"
+        @command="store.searchMode = $event"
+      >
+        <span class="el-dropdown-select">
+          {{ currentModeLable }}
+          <el-icon class="el-icon--arrow">
+            <ArrowDown />
+          </el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="mode in searchModes"
+              :key="mode.value"
+              :command="mode.value"
+              :class="{ 'is-active': store.searchMode === mode.value }"
+            >
+              {{ mode?.label }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+
+      </div>
       <div class="header-time">
         <span class="header-time__value">{{ nowFormatted }}</span>
         <span class="header-time__tz">{{ restaurant?.timezone }}</span>
@@ -100,11 +164,18 @@ const { nowFormatted } = useRestaurantTime(computed(() => restaurant.value?.time
   display: flex;
   flex-direction: row;
   align-items: center;
-  column-gap: 10px;
+  gap: 5px;
 }
 
-.header-search :deep(.el-input__wrapper) {
-  width: 258px;
+.header-search {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+  max-width: 380px;
+}
+
+.header-search .header-search__input :deep(.el-input__wrapper) {
   height: 28px;
   border-width: 1px;
   border-radius: 8px;
@@ -114,13 +185,68 @@ const { nowFormatted } = useRestaurantTime(computed(() => restaurant.value?.time
   box-shadow: none;
 }
 
-.header-search :deep(.el-input__inner) {
+.header-search .header-search__input :deep(.el-input__inner) {
   color: var(--color-text-primary);
   font-size: 12px;
 }
 
-.header-search :deep(.el-input__inner::placeholder) {
+.header-search .header-search__input :deep(.el-input__inner::placeholder) {
   color: var(--color-text-muted);
+}
+
+.header-search__divider {
+  width: 2px;
+  height: 13px;
+  background-color: var(--color-text-primary);
+  flex-shrink: 0;
+}
+
+.el-dropdown-select {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  height: 100%;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.3s;
+  outline: none;
+}
+
+.el-dropdown-select:hover {
+  color: var(--color-zone-active);
+}
+
+.el-icon-arrow {
+  font-size: 10px;
+  opacity: 0.6
+}
+
+.el-dropdown-menu {
+  background-color: var(--color-bg-base);
+  border: none !important;
+}
+
+:deep(.el-dropdown-menu__item) {
+  color: var(--color-text-primary);
+  /*background-color: transparent;*/
+}
+
+:deep(.el-dropdown-menu__item:hover:not(:focus)) {
+  color: var(--color-text-now);
+  background-color: var(--color-bg-elevated);
+}
+
+:deep(.el-dropdown-menu__item:focus:not(:hover)) {
+  background-color: transparent !important;
+  color: var(--color-text-primary) !important;
+}
+
+:deep(.el-dropdown-menu__item.is-active) {
+  color: var(--color-text-primary);
+  background-color: var(--color-zone-active);
 }
 
 .app-header__right {

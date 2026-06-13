@@ -17,8 +17,6 @@ const INTERSECTION_WINDOW_MS = 30 * 60 * 1000;
  * */
 
 export const detectEventConflict = (eventA: PartialEvent, eventB: PartialEvent): boolean => {
-    const isOverlapped = eventA.startTime < eventB.endTime && eventB.startTime < eventA.endTime;
-
     const startDiff = Math.abs(eventA.startTime.getTime() - eventB.startTime.getTime());
     const isIntersected = startDiff <= INTERSECTION_WINDOW_MS;
 

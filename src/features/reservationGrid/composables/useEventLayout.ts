@@ -19,13 +19,14 @@ import { assignColumnsInCluster } from "@/features/reservationGrid/eventLayout/a
  */
 export const computeTableLayout = (
     orders: Order[],
-    reservations: Reservation[]
+    reservations: Reservation[],
+    timezone: string
 ): NormalizedEvent[] => {
  // ---- Step 1: Normalize-----
 
   const events = [
-    ...orders.map(normalizeOrder),
-    ...reservations.map(normalizeReservation)
+    ...orders.map(order => normalizeOrder(order, timezone)),
+    ...reservations.map(reservation => normalizeReservation(reservation, timezone))
   ]
   // ---- Step 2: Sorting-----
   .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());

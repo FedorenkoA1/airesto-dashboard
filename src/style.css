@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --el-border-color-light: none !important;
+
   --color-bg-base:      #0f1117;
   --color-bg-surface:   #181c27;
   --color-bg-elevated:  #1e2235;

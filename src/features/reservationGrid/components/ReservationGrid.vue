@@ -186,6 +186,9 @@ const nowPercent = computed((): number => {
             :table="table"
             :opening-time="restaurant!.opening_time"
             :closing-time="restaurant!.closing_time"
+            :timezone="restaurant!.timezone"
+            :searchMode="store.searchMode"
+            :searchQuery="store.searchQuery"
           />
 
         </div>

@@ -160,8 +160,8 @@ const timeRange = computed(() => `${formatTime(props.event.startTime)}-${formatT
  * MINI    (heightPercent < 2%)   — show label only
  */
 const isMini    = computed(() => props.heightPercent < 2);
-const isCompact = computed(() => props.heightPercent >= 2 && props.heightPercent < 6);
-const isFull    = computed(() => props.heightPercent >= 6);
+const isCompact = computed(() => props.heightPercent >= 2 && props.heightPercent < 4);
+const isFull    = computed(() => props.heightPercent >= 4);
 
 /**
  * Phone display — last 4 digits only.

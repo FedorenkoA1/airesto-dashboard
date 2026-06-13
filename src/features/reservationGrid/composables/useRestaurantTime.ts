@@ -22,7 +22,7 @@ export function useRestaurantTime(timezone: string) {
 
     const timer = setInterval(() => {
         now.value = getRestaurantCurrentTime();
-    }, 30_000);
+    }, 60_000);
 
     onUnmounted(() => clearInterval(timer));
 

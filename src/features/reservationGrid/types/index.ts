@@ -2,7 +2,8 @@ export type {
   OrderStatus,
   ReservationStatus,
   TableZoneStatus,
-  NormalizedEventType
+  NormalizedEventType,
+  SearchMode
 } from "@/features/reservationGrid/types/enums";
 
 export type {

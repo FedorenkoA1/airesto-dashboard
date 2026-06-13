@@ -5,3 +5,5 @@ export type ReservationStatus = 'Живая очередь' | 'Новая' | 'З
 export type TableZoneStatus = '1 этаж' | '2 этаж' | 'Банкетный зал';
 
 export type NormalizedEventType = 'order' | 'reservation';
+
+export type SearchMode = 'all' | 'name' | 'status' | 'table';

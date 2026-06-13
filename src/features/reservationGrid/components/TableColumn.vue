@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { Table } from "@/features/reservationGrid/types";
+import type { Table, SearchMode } from "@/features/reservationGrid/types";
 import { computeTableLayout } from "@/features/reservationGrid/composables/useEventLayout";
 import { dateToPercent, parseTimeToMinutes } from "@/features/reservationGrid/composables/useTimeGrid";
 import EventBlock from "./EventBlock.vue";
+import { filterOrders, filterReservations } from "@/features/reservationGrid/utils/reservationFilters";
 
 // ── Props ──────────────────────────────────────────────────────────────────
 
@@ -11,8 +12,10 @@ const props = defineProps<{
   table: Table
   openingTime: string  // "11:00" — from restaurant data
   closingTime: string  // "23:40" — from restaurant data
+  timezone: string
+  searchMode: SearchMode
+  searchQuery: string
 }>()
-
 // ── Time constants ─────────────────────────────────────────────────────────
 
 /**
@@ -23,6 +26,12 @@ const props = defineProps<{
  */
 const openMinutes = computed(() => parseTimeToMinutes(props.openingTime));
 const totalMinutes = computed(() => parseTimeToMinutes(props.closingTime) - openMinutes.value);
+
+/*
+* Filter events: reservations / orders
+*/
+const filteredOrders = computed(() => filterOrders(props.table.orders, props.searchQuery, props.searchMode));
+const filteredReservations = computed(() => filterReservations(props.table.reservations, props.searchQuery, props.searchMode));
 
 // ── Layout ─────────────────────────────────────────────────────────────────
 
@@ -38,9 +47,7 @@ const totalMinutes = computed(() => parseTimeToMinutes(props.closingTime) - open
  * The algorithm processes all events together — that's why
  * it lives here and not in EventBlock.
  */
-const laidOutEvents = computed(() =>
-  computeTableLayout(props.table.orders, props.table.reservations)
-)
+const laidOutEvents = computed(() => computeTableLayout(filteredOrders.value, filteredReservations.value, props.timezone));
 
 /**
  * For each event compute the CSS positioning values.
