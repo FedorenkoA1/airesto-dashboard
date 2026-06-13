@@ -42,7 +42,6 @@ const currentModeLable = computed(() => searchModes.find(searchMode => searchMod
     </div>
     <div class="app-header__settings">
       <div class="header-search">
-        {{ localQuery }}
         <el-input
         v-model="localQuery"
         placeholder="⌘+Л поиск по имени"
